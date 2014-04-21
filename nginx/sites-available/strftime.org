@@ -1,0 +1,10 @@
+server {
+    server_name strftime.org;
+
+    root /var/www/strftime.org;
+    index index.html;
+
+    location ~ /\.ht {
+        deny all;
+    }
+}

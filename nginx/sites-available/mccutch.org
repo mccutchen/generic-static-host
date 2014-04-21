@@ -1,0 +1,10 @@
+server {
+    server_name mccutch.org;
+
+    root /var/www/mccutch.org;
+    index index.html;
+
+    location ~ /\.ht {
+        deny all;
+    }
+}
