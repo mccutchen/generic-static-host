@@ -1,4 +1,4 @@
-from fabric.api import cd, env, put, sudo, task
+from fabric.api import cd, env, prompt, put, run, sudo, task
 
 
 env.use_ssh_config = True
@@ -6,14 +6,31 @@ env.use_ssh_config = True
 
 @task
 def bootstrap():
+    run('apt-get update')
+    run('apt-get install -y nginx git php5-fpm php5-gd')
+
+    login = 'mccutchen'
+    add_user(login)
+
     web_root = '/var/www/'
-    sudo('apt-get update')
-    sudo('apt-get install nginx git php5-fpm php5-gd')
-    sudo('mkdir -p {}'.format(web_root))
-    sudo('chown mccutchen:www-data {}'.format(web_root))
+    run('mkdir -p {}'.format(web_root))
+    run('chown {}:www-data {}'.format(login, web_root))
+
     configure_nginx()
     configure_php()
     restart_nginx()
+
+
+@task
+def add_user(login):
+    password = prompt('Password for user {}@{}?'.format(login, env.host))
+    run('adduser --disabled-password --gecos "" {}'.format(login))
+    run('echo "{}:{}" | chpasswd'.format(login, password))
+    run('echo "{}\tALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers'.format(login))
+    # the following assumes a key was added to this instance when created
+    ssh_dir = '/home/{}/.ssh'.format(login)
+    run('mkdir -p {}'.format(ssh_dir))
+    run('cp ~/.ssh/authorized_keys {}'.format(ssh_dir))
 
 
 @task
