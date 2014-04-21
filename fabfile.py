@@ -19,8 +19,10 @@ def bootstrap():
 @task
 def configure_nginx():
     with cd('/etc/nginx/sites-available'):
-        put('nginx/sites-available/*')
+        run('rm -f default')
+        put('nginx/sites-available/*', '.')
     with cd('/etc/nginx/sites-enabled'):
+        run('rm -f default')
         sudo('ln -s ../sites-available/* .')
 
 
