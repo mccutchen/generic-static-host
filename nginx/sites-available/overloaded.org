@@ -1,0 +1,10 @@
+server {
+    server_name overloaded.org;
+
+    root /var/www/overloaded.org;
+    index index.html;
+
+    location ~ /\.ht {
+        deny all;
+    }
+}
