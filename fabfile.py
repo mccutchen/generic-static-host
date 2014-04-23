@@ -36,11 +36,11 @@ def add_user(login):
 @task
 def configure_nginx():
     with cd('/etc/nginx/sites-available'):
-        run('rm -f default')
-        put('nginx/sites-available/*', '.')
+        sudo('rm -f default')
+        put('nginx/sites-available/*', '.', use_sudo=True)
     with cd('/etc/nginx/sites-enabled'):
-        run('rm -f default')
-        sudo('ln -s ../sites-available/* .')
+        sudo('rm -f default')
+        sudo('ln -sf ../sites-available/* .')
 
 
 @task
