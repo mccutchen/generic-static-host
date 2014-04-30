@@ -4,7 +4,7 @@ server {
     root /var/www/mccutch.org;
     index index.html;
 
-    location ~ /\.ht {
+    location ~ /\.(ht|git) {
         deny all;
     }
 }

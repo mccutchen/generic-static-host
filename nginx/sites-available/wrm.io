@@ -4,7 +4,7 @@ server {
     root /var/www/wrm.io;
     index index.html index.php;
 
-    location ~ /\.ht {
+    location ~ /\.(ht|git) {
         deny all;
     }
 }

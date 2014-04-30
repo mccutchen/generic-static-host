@@ -4,7 +4,7 @@ server {
     root /var/www/strftime.org;
     index index.html;
 
-    location ~ /\.ht {
+    location ~ /\.(ht|git) {
         deny all;
     }
 }
