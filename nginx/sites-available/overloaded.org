@@ -4,6 +4,10 @@ server {
     root /var/www/overloaded.org;
     index index.html;
 
+    location /tmp {
+       autoindex on;
+    }
+
     location ~ /\.ht {
         deny all;
     }
