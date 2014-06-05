@@ -54,3 +54,9 @@ def configure_php():
 @task
 def restart_nginx():
     sudo('service nginx restart')
+
+
+@task
+def update_os():
+    sudo('apt-get update && apt-get upgrade')
+    restart_nginx()
