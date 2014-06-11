@@ -5,9 +5,23 @@ env.use_ssh_config = True
 
 
 @task
+def install_packages():
+    packages = [
+        'nginx',
+        'git',
+        'python-dev',
+        'python-pip',
+        'python-virtualenv',
+        'php5-fpm',
+        'php5-gd'
+    ]
+    sudo('apt-get install -y %s' % ' '.join(packages))
+
+
+@task
 def bootstrap():
-    run('apt-get update')
-    run('apt-get install -y nginx git php5-fpm php5-gd')
+    update_os(restart_nginx=False)
+    install_packages()
 
     login = 'mccutchen'
     add_user(login)
@@ -57,6 +71,7 @@ def restart_nginx():
 
 
 @task
-def update_os():
-    sudo('apt-get update && apt-get upgrade')
-    restart_nginx()
+def update_os(restart_nginx=True):
+    sudo('apt-get update && apt-get -y upgrade')
+    if restart_nginx:
+        restart_nginx()
