@@ -71,7 +71,5 @@ def restart_nginx():
 
 
 @task
-def update_os(restart_nginx=True):
+def update_os():
     sudo('apt-get update && apt-get -y upgrade')
-    if restart_nginx:
-        restart_nginx()
