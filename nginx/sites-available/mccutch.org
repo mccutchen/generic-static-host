@@ -2,8 +2,11 @@ server {
     server_name mccutch.org;
 
     listen              443 ssl;
-    ssl_certificate     /etc/nginx/ssl/mccutch.org-unified.crt;
-    ssl_certificate_key /etc/nginx/ssl/mccutch.org.key;
+
+    # certs managed by dnsimple & letsencrypt:
+    # https://dnsimple.com/a/9739/domains/mccutch.org/certificates/25969
+    ssl_certificate     /etc/nginx/ssl/www_mccutch_org.pem;
+    ssl_certificate_key /etc/nginx/ssl/www_mccutch_org.key;
 
     # https://www.eff.org/deeplinks/2015/04/effs-updated-ssl-configuration
     ssl_prefer_server_ciphers on;
