@@ -1,0 +1,18 @@
+server {
+    server_name design.humortree.org;
+
+    root /var/www/design.humortree.org;
+    index index.php index.html;
+
+    location ~ \.php$ {
+        fastcgi_split_path_info ^(.+\.php)(/.+)$;
+        # NOTE: You should have "cgi.fix_pathinfo = 0;" in php.ini
+        fastcgi_pass unix:/var/run/php5-fpm.sock;
+        fastcgi_index index.php;
+        include fastcgi_params;
+    }
+
+    location ~ /\.(ht|git) {
+        deny all;
+    }
+}
