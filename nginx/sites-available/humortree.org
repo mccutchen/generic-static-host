@@ -15,4 +15,8 @@ server {
     location ~ /\.(ht|git) {
         deny all;
     }
+
+    location /archives/frontpages/ {
+       autoindex on;
+    }
 }
