@@ -36,6 +36,14 @@ def bootstrap():
 
 
 @task
+def deploy():
+    configure_nginx()
+    configure_php()
+    restart_php()
+    restart_nginx()
+
+
+@task
 def add_user(login):
     password = prompt('Password for user {}@{}?'.format(login, env.host))
     run('adduser --disabled-password --gecos "" {}'.format(login))
@@ -63,6 +71,11 @@ def configure_php():
     with cd('/etc/php5/fpm'):
         put('php/php.ini', '.', use_sudo=True)
         put('php/www.conf', 'pool.d/', use_sudo=True)
+
+
+@task
+def restart_php():
+    sudo('service php5-fpm restart')
 
 
 @task
